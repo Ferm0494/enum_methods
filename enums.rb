@@ -131,34 +131,3 @@ module Enumerables
   end
 end
 # rubocop:enable Metrics/ModuleLength
-# include Enumerables
-# square = proc { |x| x**2 }
-# [1,2,3].my_each{
-#     |element|
-#     puts element
-# }
-
-#  [100,200,300].my_each_with_index{
-#     |index,element|
-#     puts "Index #{index} and element : #{element}"
-#
-
-#  puts [1,2,400].my_select{|element| element != 400}
-
-# puts ["Hello" "World!"].my_all?{|element| element.length > 10}
-
-# puts [4,3,0].my_any?{|x| x> 5}
-
-# puts [3,2,2].my_none?{|x| x == 3}
-
-# puts [3,2,3].my_count{|x|  x > 2}
-
-# puts [3,3,2].my_map{|x| x + 1}
-
-# puts [4,4,10].inject{|sum,num| num + sum}
-
-# puts [2,3,2,10].my_multiply
-
-# puts [2, 1, 2].my_map(square) { |x|
-#   x + 2
-# }
