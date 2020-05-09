@@ -9,7 +9,7 @@
 ## Getting Started
 
 
-**Uncomment #include enumerables and start playing with the cases**
+**Put #include enumerables and start playing with the cases**
 
 
 ## Author
