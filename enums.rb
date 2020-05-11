@@ -61,7 +61,7 @@ module Enumerable
       end
 
     else
-      response = true
+      response = false
     end
     response
   end
@@ -90,7 +90,7 @@ module Enumerable
       end
 
     else
-      response = true
+      response = false
     end
     response
   end
@@ -133,7 +133,11 @@ module Enumerable
       end
 
     elsif !count.eql?(0)
-      count += size
+      counter = 0
+      my_each do |element|
+        counter += 1 if element.eql?(count)
+      end
+      return counter
 
     else
       count = size
