@@ -1,5 +1,8 @@
 # rubocop:disable Style/For
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
     if block_given?
@@ -30,7 +33,7 @@ module Enumerable
       end
       arr
     else
-      to_a
+      to_enum
     end
   end
 
@@ -42,8 +45,19 @@ module Enumerable
       end
 
     elsif !arg.nil?
-      my_each do |element|
-        response = false unless element.is_a?(arg)
+      if arg.is_a? Class
+        my_each do |element|
+          response = false unless element.is_a?(arg)
+        end
+      elsif arg.is_a? Regexp
+        my_each do |element|
+          response = false unless element.match(arg)
+        end
+
+      else
+        my_each do |element|
+          response = false unless element.eql?(arg)
+        end
       end
 
     else
@@ -60,8 +74,19 @@ module Enumerable
       end
 
     elsif !arg.nil?
-      my_each do |element|
-        response = true if element.is_a?(arg)
+      if arg.is_a? Class
+        my_each do |element|
+          response = true if element.is_a?(arg)
+        end
+      elsif arg.is_a? Regexp
+        my_each do |element|
+          response = true if element.match(arg)
+        end
+
+      else
+        my_each do |element|
+          response = true if element.eql?(arg)
+        end
       end
 
     else
@@ -73,13 +98,27 @@ module Enumerable
   def my_none?(arg = nil)
     response = false
     if block_given?
+      response = true
       my_each do |element|
-        response = true if yield(element)
+        response = false if yield(element)
       end
 
     elsif !arg.nil?
-      my_each do |element|
-        response = true unless element.is_a?(arg)
+
+      if arg.is_a? Class
+        my_each do |element|
+          response = true unless element.is_a?(arg)
+        end
+      elsif arg.is_a? Regexp
+        my_each do |element|
+          response = true unless element.match(arg)
+        end
+
+      else
+        response = true
+        my_each do |element|
+          response = false if element.eql?(arg)
+        end
       end
     else
       response = true
@@ -117,30 +156,57 @@ module Enumerable
       arr = to_a
 
     end
-    arr
+    to_enum
   end
 
-  def my_inject(acum = 0)
-    if acum.equal?(:+)
+  def my_inject(* args)
+    if is_a? Range
+      to_a
+      puts self
+    end
+    if args[0].equal?(:+) and args[1].nil?
       acum = 0
       my_each do |element|
         acum += element
       end
-
-    elsif acum.equal?(:*)
+      acum
+    elsif args[0].equal?(:*) and args[1].nil?
       acum = 1
       my_each do |element|
         acum *= element
       end
+      acum
+    elsif args[0].is_a? Numeric and args[1].equal?(:+)
+      acum = args[0]
+      my_each do |element|
+        acum += element
+      end
+      acum
 
-    elsif block_given?
+    elsif args[0].is_a? Numeric and args[1].equal?(:*)
+      acum = args[0]
+      my_each do |element|
+        acum *= element
+      end
+      acum
+
+    elsif block_given? and args[0].is_a? Numeric
+      acum = args[0]
       my_each do |element|
         acum = yield(acum, element)
       end
+      acum
+
+    elsif block_given? and args.size.eql?(0)
+      acum = self[0]
+      my_each do |element|
+        acum = yield(acum, element)
+      end
+      acum
+
     else
       to_enum
     end
-    acum
   end
 
   def my_multiply()
@@ -149,3 +215,7 @@ module Enumerable
 end
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Style/For
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
+# include Enumerable
