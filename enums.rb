@@ -17,8 +17,10 @@ module Enumerable
   def my_each_with_index
     if block_given?
       for i in (0...size)
-        yield(i, self[i])
+
+        yield(self[i], i)
       end
+      nil
     else
       to_enum
     end
@@ -45,13 +47,14 @@ module Enumerable
       end
 
     elsif !arg.nil?
+
       if arg.is_a? Class
         my_each do |element|
           response = false unless element.is_a?(arg)
         end
       elsif arg.is_a? Regexp
         my_each do |element|
-          response = false unless element.match(arg)
+          response = false unless element.to_s.match(arg)
         end
 
       else
@@ -61,7 +64,7 @@ module Enumerable
       end
 
     else
-      response = false
+      response = true
     end
     response
   end
@@ -80,7 +83,7 @@ module Enumerable
         end
       elsif arg.is_a? Regexp
         my_each do |element|
-          response = true if element.match(arg)
+          response = true if element.to_s.match(arg)
         end
 
       else
@@ -90,13 +93,13 @@ module Enumerable
       end
 
     else
-      response = false
+      response = true
     end
     response
   end
 
   def my_none?(arg = nil)
-    response = false
+    response = true
     if block_given?
       response = true
       my_each do |element|
@@ -107,15 +110,15 @@ module Enumerable
 
       if arg.is_a? Class
         my_each do |element|
-          response = true unless element.is_a?(arg)
+          response = false if element.is_a?(arg)
         end
       elsif arg.is_a? Regexp
         my_each do |element|
-          response = true unless element.match(arg)
+          response = false if element.to_s.match(arg)
         end
 
       else
-        response = true
+
         my_each do |element|
           response = false if element.eql?(arg)
         end
@@ -147,7 +150,6 @@ module Enumerable
 
   def my_map(proc = nil)
     arr = []
-
     if proc.equal?(nil) == false
       my_each do |element|
         arr << proc.call(element)
@@ -157,17 +159,13 @@ module Enumerable
         arr << yield(element)
       end
     else
-      arr = to_a
-
+      return to_enum
     end
-    to_enum
+    arr
   end
 
   def my_inject(* args)
-    if is_a? Range
-      to_a
-      puts self
-    end
+    to_a if is_a? Range
     if args[0].equal?(:+) and args[1].nil?
       acum = 0
       my_each do |element|
@@ -222,4 +220,3 @@ end
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
-# include Enumerable
