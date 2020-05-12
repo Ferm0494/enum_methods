@@ -124,7 +124,7 @@ module Enumerable
         end
       end
     else
-      response = true
+      response = false
     end
     response
   end
@@ -200,7 +200,7 @@ module Enumerable
       acum
 
     elsif block_given? and args.size.eql?(0)
-      acum = self[0]
+      acum = 0
       my_each do |element|
         acum = yield(acum, element)
       end
