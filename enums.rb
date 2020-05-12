@@ -20,7 +20,7 @@ module Enumerable
 
         yield(self[i], i)
       end
-      nil
+      to_a
     else
       to_enum
     end
@@ -93,7 +93,10 @@ module Enumerable
       end
 
     else
-      response = true
+      response = false
+      my_each do |element|
+        response = true if element
+      end
     end
     response
   end
@@ -124,25 +127,29 @@ module Enumerable
         end
       end
     else
-      response = false
+      response = true
+      my_each do |element|
+        response = false if element
+      end
     end
     response
   end
 
-  def my_count(count = 0)
+  def my_count(*arg)
+    count = 0
     if block_given?
       my_each do |element|
         count += 1 if yield(element)
       end
 
-    elsif !count.eql?(0)
-      counter = 0
+    elsif !arg[0].nil?
       my_each do |element|
-        counter += 1 if element.eql?(count)
+        count += 1 if element.eql?(arg[0])
       end
-      return counter
+      return count
 
     else
+
       count = size
     end
     count
@@ -192,7 +199,7 @@ module Enumerable
       end
       acum
 
-    elsif block_given? and args[0].is_a? Numeric
+    elsif block_given? and !args[0].nil?
       acum = args[0]
       my_each do |element|
         acum = yield(acum, element)
@@ -200,12 +207,17 @@ module Enumerable
       acum
 
     elsif block_given? and args.size.eql?(0)
-      acum = 0
+      if is_a? Range
+        arr = to_a
+        acum = arr[0]
+      else
+        acum = self[0]
+      end
+      acum = 0 unless acum.is_a? String
       my_each do |element|
         acum = yield(acum, element)
       end
       acum
-
     else
       to_enum
     end
