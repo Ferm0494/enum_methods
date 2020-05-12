@@ -65,6 +65,10 @@ module Enumerable
 
     else
       response = true
+      my_each do |element|
+        response = false unless element
+      end
+
     end
     response
   end
@@ -232,3 +236,20 @@ end
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
+
+# ar = "adfjos".chars.sort
+# ar2 ="aefiou".chars.sort
+# print ar
+# print ar2
+# count = 0 
+
+# for i in (0 ... ar2.size)
+#   if  ar2[i].eql?( ar[i])
+#       ar[i] == ar[2]
+#   else
+#     count +=1
+
+#   end
+# end
+
+# puts "FINAL #{count}"
