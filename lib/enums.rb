@@ -232,7 +232,7 @@ module Enumerable
   end
 end
 
-p [false, true, 99].my_all?
+p [false, nil].none?
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Style/For
 # rubocop:enable Metrics/PerceivedComplexity
