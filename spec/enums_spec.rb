@@ -153,4 +153,18 @@ describe Enumerable do
       end
     end
 
+    describe "#my_inject" do
+      it "Returns a Combination of all elements by applying a binary operation specified by a symbol" do
+        expect(array.my_inject(:*)).to eql(array.my_inject(:*))
+      end
+
+      it "It returns a Combination of all elements starting from the first argument by applying a binary operation specified by a symbol provided in the second argument" do
+        expect(array.my_inject(1, :*)).to eql(array.inject(1, :*))
+      end
+
+      it "it Returns a Combination of all elements by applying a binary operation specified by the block" do
+        expect(array.my_inject(1) { |product, n| product * n }).to eql(array.inject(1) { |product, n| product * n })
+      end
+    end
+
 end
