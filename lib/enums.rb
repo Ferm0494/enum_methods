@@ -231,6 +231,8 @@ module Enumerable
     my_inject(:*)
   end
 end
+
+p [false, true, 99].my_all?
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Style/For
 # rubocop:enable Metrics/PerceivedComplexity
@@ -270,24 +272,7 @@ end
   
 # end
 
-class Node
-  attr_accessor :value, :next_node
-  
-  def initialize(value, next_node = nil)
-	  @value = value
-    @next_node = next_node
-  end
-end
 
-def writing
-  node = Node.new(12,0)
-  node.value = 13
-
-  puts node.value
-  
-end
-
-writing()
 
 
 

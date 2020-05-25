@@ -2,8 +2,10 @@ require './lib/enums'
 
 describe Enumerable do
     let (:array) {[1,2,5,4,3,2,3,4,0,2,3,30]}
+    let (:same) {[1,1,1,1]}
     let (:strings) {%w[Hello World Fer]}
     let (:empty) {[]}
+    let (:bool){[nil, true, 99]}
 
     describe "#my_each" do  
         it "Returns the array itself of numbers with block" do 
@@ -61,9 +63,25 @@ describe Enumerable do
         it "Returns true if all the elements condition is met" do
             expect(strings.my_all?{ |word| word.length >= 4 }).to eql(strings.all?{ |word| word.length >= 4 } )
         end
+
+        it "Returns false if one element is false/nil" do
+            expect(bool.my_all?).to eql (bool.all?)
+        end
+
+        it "Returns true if element is empty" do
+            expect(empty.my_all?).to eql(empty.all?)
+        end
+
+        it "Returns true if element are the same" do
+            expect(same.my_all?(1)).to eql(same.all?(1))
+        end
+
+        it "Returns false if elements are NOT the same" do
+            expect(array.my_all?(1)).to eql(array.all?(1))
+        end
     end
 
-    
+
 
 
 
