@@ -5,7 +5,7 @@ describe Enumerable do
     let (:same) {[1,1,1,1]}
     let (:strings) {%w[Hello World Fer]}
     let (:empty) {[]}
-    let (:bool){[nil, true, 99]}
+    let (:bool) {[nil, true, 99]}
 
     describe "#my_each" do
         it "Returns the array itself of numbers with block" do
@@ -143,6 +143,14 @@ describe Enumerable do
       end
     end
 
-    
+    describe "#my_map" do
+      it "Returns a new array containing the elements that satisfies the conditions of the block" do
+        expect(array.my_map { |x| x * x }).to eql(array.map { |x| x * x })
+      end
+
+      it "Returns an Enumerator if no block is given" do
+        expect(array.my_map).to be_an(Enumerator)
+      end
+    end
 
 end
