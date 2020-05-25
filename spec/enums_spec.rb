@@ -7,8 +7,8 @@ describe Enumerable do
     let (:empty) {[]}
     let (:bool){[nil, true, 99]}
 
-    describe "#my_each" do  
-        it "Returns the array itself of numbers with block" do 
+    describe "#my_each" do
+        it "Returns the array itself of numbers with block" do
             expect(array.my_each{|x| x}).to eql(array.each{|x| x})
         end
 
@@ -22,7 +22,7 @@ describe Enumerable do
     end
 
     describe "#my_each_with_index" do
-        it "Returns the array itself of numbers and index with block" do 
+        it "Returns the array itself of numbers and index with block" do
             expect(array.my_each_with_index{|x| x}).to eql(array.each_index{|x| x})
             expect(array.my_each_with_index{|x,i| i}).to eql(array.each_index{|x,i| i})
 
@@ -53,7 +53,7 @@ describe Enumerable do
 
     describe "#my_all" do
         it "Returns true if no block given" do
-            expect(array.my_all?).to eql(array.all?)  
+            expect(array.my_all?).to eql(array.all?)
         end
 
         it "Returns true if all elements are the same" do
@@ -81,8 +81,31 @@ describe Enumerable do
         end
     end
 
+    describe "#my_any" do
+      it "Returns true if no argument is given, no block given and contains true" do
+        expect(bool.my_any?).to eql(bool.any?)
+      end
 
+      it "Returns true if any element met the condition inside the block" do
+        expect(array.my_any?{|i| i > 3}).to eql(array.any?{|i| i > 3})
+      end
 
+      it "Returns true if element is of the same class" do
+        expect(bool.my_any?(Integer)).to eql(bool.any?(Integer))
+      end
+
+      it "Returns true if any of the element are the same" do
+          expect(same.my_any?(1)).to eql(same.any?(1))
+      end
+
+      it "Returns false if none of the elements are the same" do
+          expect(array.my_any?(50)).to eql(array.any?(50))
+      end
+
+      it "Returns false if element is empty" do
+          expect(empty.my_any?).to eql(empty.any?)
+      end
+    end
 
 
 end
