@@ -107,5 +107,26 @@ describe Enumerable do
       end
     end
 
+    describe "#my_none" do
+      it "Returns true if no argument is given, no block given and does not contain a true element" do
+        expect(bool.my_none?).to eql(bool.none?)
+      end
+
+      it "Returns true if none of the condition inside the block is met" do
+        expect(array.my_none?{|i| i > 3}).to eql(array.none?{|i| i > 3})
+      end
+
+      it "Returns true if none of the element is of the same class as that of the argument" do
+        expect(bool.my_none?(Integer)).to eql(bool.none?(Integer))
+      end
+
+      it "Returns true if none of the element are the same compared to the argument" do
+          expect(same.my_none?(100)).to eql(same.none?(100))
+      end
+
+      it "Returns true if element is empty" do
+          expect(empty.my_none?).to eql(empty.none?)
+      end
+    end
 
 end
