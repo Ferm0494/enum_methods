@@ -129,4 +129,20 @@ describe Enumerable do
       end
     end
 
+    describe "#my_count" do
+      it "Returns a summation of all the elements if no argument is given" do
+        expect(array.my_count).to eql(array.count)
+      end
+
+      it "Returns number of items that are equal to argument" do
+        expect(array.my_count(3)).to eql(array.count(3))
+      end
+
+      it "Returns number of elements that satisfies the condition of the proc given in the argument" do
+        expect(array.my_count(&:even?)).to eql(array.count(&:even?))
+      end
+    end
+
+    
+
 end
