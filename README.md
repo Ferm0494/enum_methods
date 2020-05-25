@@ -5,6 +5,7 @@
 ## Built With
 
 - Ruby.
+- rspec
 
 ## Getting Started
 
