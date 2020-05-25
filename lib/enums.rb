@@ -236,3 +236,58 @@ end
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
+
+
+
+# class Accounts
+#   def reading_charge
+#   end
+#   def self.return_date
+#     p "HElLO"
+#   end
+# end
+
+# ac = Accounts.new
+# ac.reading_charge
+
+# #  NO need to create an object for method
+# Accounts.return_date
+
+
+
+
+
+# def ores
+#   return 10,3,2
+
+# end
+
+# arr = Array.new
+# arr = ores
+# puts arr[0]
+
+# for item in string
+  
+# end
+
+class Node
+  attr_accessor :value, :next_node
+  
+  def initialize(value, next_node = nil)
+	  @value = value
+    @next_node = next_node
+  end
+end
+
+def writing
+  node = Node.new(12,0)
+  node.value = 13
+
+  puts node.value
+  
+end
+
+writing()
+
+
+
