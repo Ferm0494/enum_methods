@@ -6,6 +6,13 @@ describe Enumerable do
   strings = %w[Hello World Fer]
   empty = []
   bool = [nil, true, 99]
+  range = 1..25
+  hash = {
+    :email => "redbull@io.com",
+    :name => "orio",
+    :age => 70,
+    :number => 5544788955
+  }
 
   describe '#my_each' do
     it 'Returns the array itself of numbers with block' do
@@ -59,6 +66,10 @@ describe Enumerable do
       expect(array.my_all?(Numeric)).to eql(array.all?(Numeric))
     end
 
+    it 'If argument is a regular expression, return true if there is a match for all elements' do
+      expect(range.my_any?(/d/)).to eql(range.any?(/d/))
+    end
+
     it 'Returns true if all the elements condition is met' do
       expect(strings.my_all? { |word| word.length >= 4 }).to eql(strings.all? { |word| word.length >= 4 })
     end
@@ -93,6 +104,10 @@ describe Enumerable do
       expect(bool.my_any?(Integer)).to eql(bool.any?(Integer))
     end
 
+    it 'If argument is a regular expression, return true if there is a match' do
+      expect(range.my_any?(/d/)).to eql(range.any?(/d/))
+    end
+
     it 'Returns true if any of the element are the same' do
       expect(same.my_any?(1)).to eql(same.any?(1))
     end
@@ -111,12 +126,16 @@ describe Enumerable do
       expect(bool.my_none?).to eql(bool.none?)
     end
 
-    it 'Returns true if none of the condition inside the block is met' do
+    it 'When block is given, returns true if none of the condition inside the block is met' do
       expect(array.my_none? { |i| i > 3 }).to eql(array.none? { |i| i > 3 })
     end
 
     it 'Returns true if none of the element is of the same class as that of the argument' do
       expect(bool.my_none?(Integer)).to eql(bool.none?(Integer))
+    end
+
+    it 'If argument is a regular expression, return true if there is no match' do
+      expect(range.my_none?(/d/)).to eql(range.none?(/d/))
     end
 
     it 'Returns true if none of the element are the same compared to the argument' do
@@ -140,11 +159,19 @@ describe Enumerable do
     it 'Returns number of elements that satisfies the condition of the proc given in the argument' do
       expect(array.my_count(&:even?)).to eql(array.count(&:even?))
     end
+
+    it 'When block is given, return number of items that satisfies the condition by the block' do
+      expect(range.my_count{|x| x%2==0}).to eql(range.count{|x| x%2==0})
+    end
   end
 
   describe '#my_map' do
     it 'Returns a new array containing the elements that satisfies the conditions of the block' do
       expect(array.my_map { |x| x * x }).to eql(array.map { |x| x * x })
+    end
+
+    it 'Returns a new array containing the elements in the range that satisfies the conditions of the block' do
+      expect(range.my_map { |x| x * x }).to eql(range.map { |x| x * x })
     end
 
     it 'Returns an Enumerator if no block is given' do
@@ -155,6 +182,10 @@ describe Enumerable do
   describe '#my_inject' do
     it 'Returns a Combination of all elements by applying a binary operation specified by a symbol' do
       expect(array.my_inject(:*)).to eql(array.my_inject(:*))
+    end
+
+    it 'Applies combination on elements within the range specified by a symbol' do
+      expect(range.my_inject(:*)).to eql(range.my_inject(:*))
     end
 
     it 'Applies combination specified by symbol' do
