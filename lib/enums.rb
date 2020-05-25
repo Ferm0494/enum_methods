@@ -239,8 +239,6 @@ p [false, true, 99].my_all?
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
 
-
-
 # class Accounts
 #   def reading_charge
 #   end
@@ -255,10 +253,6 @@ p [false, true, 99].my_all?
 # #  NO need to create an object for method
 # Accounts.return_date
 
-
-
-
-
 # def ores
 #   return 10,3,2
 
@@ -269,10 +263,5 @@ p [false, true, 99].my_all?
 # puts arr[0]
 
 # for item in string
-  
+
 # end
-
-
-
-
-
