@@ -231,8 +231,37 @@ module Enumerable
     my_inject(:*)
   end
 end
+
+p [false, nil].none?
 # rubocop:enable Metrics/ModuleLength
 # rubocop:enable Style/For
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/MethodLength
+
+# class Accounts
+#   def reading_charge
+#   end
+#   def self.return_date
+#     p "HElLO"
+#   end
+# end
+
+# ac = Accounts.new
+# ac.reading_charge
+
+# #  NO need to create an object for method
+# Accounts.return_date
+
+# def ores
+#   return 10,3,2
+
+# end
+
+# arr = Array.new
+# arr = ores
+# puts arr[0]
+
+# for item in string
+
+# end
